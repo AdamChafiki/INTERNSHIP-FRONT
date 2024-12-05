@@ -1,0 +1,226 @@
+<main class="p-8">
+  <div class="p-4 bg-white rounded-md min-h-screen">
+    @if (isLoading) {
+    <div class="flex w-full flex-col gap-4">
+      <div class="skeleton h-32 w-32 rounded-full"></div>
+      <div class="skeleton h-4 w-28"></div>
+      <div class="skeleton h-4 w-full"></div>
+      <div class="skeleton h-4 w-full"></div>
+      <div class="skeleton h-4 w-full"></div>
+      <div class="skeleton h-4 w-full"></div>
+      <div class="skeleton h-4 w-full"></div>
+    </div>
+    } @else { @if(data){
+    <div class="space-y-4">
+      <!-- top -->
+      <div class="flex space-x-4 items-center">
+        <div class="avatar placeholder">
+          <div class="bg-neutral text-neutral-content w-20 rounded-full">
+            <span class="text-3xl">{{
+              data.user.email.charAt(0).toUpperCase()
+            }}</span>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg/tight font-medium text-gray-900">
+            {{ data.user.firstName }} {{ data.user.lastName }}
+          </h3>
+          <h3 class="mt-0.5 text-2xl text-orange-600">
+            Intern in {{ data.specialty }}
+          </h3>
+        </div>
+        <div class="flex justify-end w-full">
+          @if (data.resumeUrl !=null) {
+          <button
+            class="btn btn-warning text-white"
+            (click)="getCv(data.user.id)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-file-cv"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+              <path
+                d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"
+              />
+              <path d="M11 12.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0" />
+              <path d="M13 11l1.5 6l1.5 -6" />
+            </svg>
+            Resume
+          </button>
+          }@else {
+          }
+        </div>
+      </div>
+      <!-- endtop -->
+      <!-- middle -->
+      <div class="border-2 p-4 rounded-lg">
+        <div class="flex justify-around">
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="gray"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-school mr-2"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+              </svg>
+              <p class="text-gray-500">School</p>
+            </div>
+            <p class="text-sm font-semibold">
+              {{ data.schoolName }}
+            </p>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="gray"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check mr-2"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"
+                />
+                <path d="M16 3v4" />
+                <path d="M8 3v4" />
+                <path d="M4 11h16" />
+                <path d="M15 19l2 2l4 -4" />
+              </svg>
+              <p class="text-gray-500">Available From</p>
+            </div>
+            <p class="text-sm font-semibold">
+              {{ data.startDate }}
+            </p>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="gray"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check mr-2"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"
+                />
+                <path d="M16 3v4" />
+                <path d="M8 3v4" />
+                <path d="M4 11h16" />
+                <path d="M15 19l2 2l4 -4" />
+              </svg>
+              <p class="text-gray-500">Specialty</p>
+            </div>
+            <p
+              class="whitespace-nowrap rounded-full bg-orange-100 px-2.5 py-0.5 text-sm text-orange-700"
+            >
+              {{ data.specialty }}
+            </p>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="gray"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check mr-2"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"
+                />
+                <path d="M16 3v4" />
+                <path d="M8 3v4" />
+                <path d="M4 11h16" />
+                <path d="M15 19l2 2l4 -4" />
+              </svg>
+              <p class="text-gray-500">Available For</p>
+            </div>
+            <p
+              class="whitespace-nowrap rounded-full bg-orange-100 px-2.5 py-0.5 text-sm text-orange-700"
+            >
+              {{ data.duration }} Months
+            </p>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="gray"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-trending-up mr-2"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M3 17l6 -6l4 4l8 -8" />
+                <path d="M14 7l7 0l0 7" />
+              </svg>
+              <p class="text-gray-500">Level</p>
+            </div>
+            <p
+              class="whitespace-nowrap rounded-full bg-orange-100 px-2.5 py-0.5 text-sm text-orange-700"
+            >
+              {{ data.level }}
+            </p>
+          </div>
+        </div>
+        <span class="flex items-center my-4">
+          <span class="h-px flex-1 bg-gray-500"></span>
+          <span class="h-px flex-1 bg-gray-500"></span>
+        </span>
+        <div>
+          <h1>Presentation</h1>
+          <p>{{ data.description }}</p>
+        </div>
+      </div>
+    </div>
+    }@else {
+    <div>
+      <p>No profile found</p>
+    </div>
+    } }
+  </div>
+</main>

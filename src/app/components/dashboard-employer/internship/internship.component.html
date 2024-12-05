@@ -1,0 +1,391 @@
+<div
+  class="bg-blue-100 p-4 rounded-lg w-full flex justify-between items-center shadow-sm"
+>
+  <p class="text-xl text-blue-500 uppercase font-bold">Internships</p>
+  <button
+    (click)="openModal()"
+    class="btn btn-warning text-white flex items-center space-x-2"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-5 h-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+      <path d="M9 12h6" />
+      <path d="M12 9v6" />
+    </svg>
+    <span>Add Internship</span>
+  </button>
+</div>
+
+<!-- Modal -->
+<dialog id="my_modal_1" class="modal">
+  <div class="modal-box">
+    <form
+      class="space-y-6"
+      [formGroup]="internshipForm"
+      (ngSubmit)="addInternship()"
+    >
+      <!-- Internship Title -->
+      <div>
+        <label for="title" class="block text-sm font-medium text-gray-700"
+          >Internship Title</label
+        >
+        <input
+          id="title"
+          formControlName="title"
+          type="text"
+          placeholder="Internship Title"
+          class="w-full rounded-lg border-gray-300 p-3 text-sm"
+        />
+      </div>
+
+      <!-- Internship Description -->
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-700"
+          >Description</label
+        >
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="4"
+          placeholder="Brief Description of the Internship"
+          class="w-full rounded-lg border-gray-300 p-3 text-sm"
+        ></textarea>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Internship Type -->
+        <div>
+          <label for="type" class="block text-sm font-medium text-gray-700"
+            >Type</label
+          >
+          <input
+            id="type"
+            formControlName="type"
+            type="text"
+            placeholder="Internship Type (e.g., Full-time, Part-time)"
+            class="w-full rounded-lg border-gray-300 p-3 text-sm"
+          />
+        </div>
+
+        <!-- Internship Location -->
+        <div>
+          <label for="location" class="block text-sm font-medium text-gray-700"
+            >Location</label
+          >
+          <input
+            id="location"
+            formControlName="location"
+            type="text"
+            placeholder="Internship Location"
+            class="w-full rounded-lg border-gray-300 p-3 text-sm"
+          />
+        </div>
+      </div>
+
+      <!-- Internship presence -->
+      <div>
+        <label for="presence" class="block text-sm font-medium text-gray-700"
+          >presence</label
+        >
+        <input
+          id="presence"
+          formControlName="presence"
+          type="text"
+          placeholder="Internship presence"
+          class="w-full rounded-lg border-gray-300 p-3 text-sm"
+        />
+      </div>
+
+      <!-- Duration -->
+      <div>
+        <label for="duration" class="block text-sm font-medium text-gray-700"
+          >Duration (Months)</label
+        >
+        <input
+          id="duration"
+          type="number"
+          formControlName="duration"
+          placeholder="Duration in Months"
+          class="w-full rounded-lg border-gray-300 p-3 text-sm"
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full sm:w-auto bg-blue-500 text-white px-5 py-3 rounded-lg font-medium hover:bg-blue-600"
+      >
+        Submit Internship Information
+      </button>
+    </form>
+
+    <div class="modal-action">
+      <button class="btn" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Internship Details Grid -->
+@if (isLoading) {
+<div class="flex flex-col space-y-2 mt-5">
+  <div class="skeleton h-24 w-full"></div>
+  <div class="skeleton h-24 w-full"></div>
+  <div class="skeleton h-24 w-full"></div>
+  <div class="skeleton h-24 w-full"></div>
+</div>
+} @else { @if (data.length > 0) {
+<div>
+  @for (elem of data; track elem.id) {
+  <div class="p-2">
+    <div
+      class="p-4 bg-white shadow-lg rounded-lg hover:shadow-xl transition duration-300 ease-in-out"
+    >
+      <div class="space-y-4">
+        <!-- Title -->
+        <a
+          [routerLink]="'/internship/' + elem.id"
+          class="text-2xl font-semibold text-gray-800"
+          >{{ elem.title }}</a
+        >
+
+        <!-- Description -->
+        <p class="text-sm font-semibold text-gray-600">
+          {{ elem.description | slice : 0 : 50 }}...
+        </p>
+
+        <!-- Type and Presence -->
+        <div class="flex space-x-4 text-sm text-gray-500">
+          <p class="bg-blue-100 text-blue-600 px-3 py-1 rounded-md">
+            {{ elem.type }}
+          </p>
+          <p class="bg-green-100 text-green-600 px-3 py-1 rounded-md">
+            {{ elem.duration }} Month
+          </p>
+        </div>
+
+        <!-- Location with Icon -->
+        <p class="flex items-center text-gray-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="mr-2 text-red-500"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+            <path
+              d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"
+            />
+          </svg>
+          {{ elem.location }}
+        </p>
+
+        <!-- Date Created -->
+        <p class="text-sm text-gray-400">
+          {{ elem.createdAt | date : "dd/MM/yyyy" }}
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="flex space-x-4">
+          <!-- Modify Button -->
+          <button
+            (click)="openModal2(elem.id)"
+            class="btn btn-primary btn-sm text-white"
+          >
+            Modify
+          </button>
+
+          <!-- Delete Button -->
+          <button
+            (click)="deleteInternship(elem.id)"
+            class="btn btn-error btn-sm text-white"
+          >
+            Delete
+          </button>
+        </div>
+        <!-- Modal -->
+        <dialog id="my_modal_2" class="modal">
+          <div class="modal-box">
+            <form
+              class="space-y-6"
+              [formGroup]="updateInternshipForm"
+              (ngSubmit)="updateInternship(elem.id)"
+            >
+              <!-- Internship Title -->
+              <div>
+                <label
+                  for="title2"
+                  class="block text-sm font-medium text-gray-700"
+                  >Internship Title</label
+                >
+                <input
+                  id="title2"
+                  formControlName="title"
+                  type="text"
+                  placeholder="Internship Title"
+                  class="w-full rounded-lg border-gray-300 p-3 text-sm"
+                />
+              </div>
+
+              <!-- Internship Description -->
+              <div>
+                <label
+                  for="description"
+                  class="block text-sm font-medium text-gray-700"
+                  >Description</label
+                >
+                <textarea
+                  id="description2"
+                  formControlName="description"
+                  rows="4"
+                  placeholder="Brief Description of the Internship"
+                  class="w-full rounded-lg border-gray-300 p-3 text-sm"
+                ></textarea>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Internship Type -->
+                <div>
+                  <label
+                    for="type"
+                    class="block text-sm font-medium text-gray-700"
+                    >Type</label
+                  >
+                  <input
+                    id="type2"
+                    formControlName="type"
+                    type="text"
+                    placeholder="Internship Type (e.g., Full-time, Part-time)"
+                    class="w-full rounded-lg border-gray-300 p-3 text-sm"
+                  />
+                </div>
+
+                <!-- Internship Location -->
+                <div>
+                  <label
+                    for="location"
+                    class="block text-sm font-medium text-gray-700"
+                    >Location</label
+                  >
+                  <input
+                    id="location2"
+                    formControlName="location"
+                    type="text"
+                    placeholder="Internship Location"
+                    class="w-full rounded-lg border-gray-300 p-3 text-sm"
+                  />
+                </div>
+              </div>
+
+              <!-- Internship presence -->
+              <div>
+                <label
+                  for="presence"
+                  class="block text-sm font-medium text-gray-700"
+                  >presence</label
+                >
+                <input
+                  id="presence2"
+                  formControlName="presence"
+                  type="text"
+                  placeholder="Internship presence"
+                  class="w-full rounded-lg border-gray-300 p-3 text-sm"
+                />
+              </div>
+
+              <!-- Duration -->
+              <div>
+                <label
+                  for="duration"
+                  class="block text-sm font-medium text-gray-700"
+                  >Duration (Months)</label
+                >
+                <input
+                  id="duration2"
+                  type="number"
+                  formControlName="duration"
+                  placeholder="Duration in Months"
+                  class="w-full rounded-lg border-gray-300 p-3 text-sm"
+                />
+              </div>
+
+              <!-- Submit Button -->
+              <button
+                type="submit"
+                class="w-full sm:w-auto bg-blue-500 text-white px-5 py-3 rounded-lg font-medium hover:bg-blue-600"
+              >
+                Update
+              </button>
+            </form>
+
+            <div class="modal-action">
+              <button class="btn" (click)="closeModal2()">Close</button>
+            </div>
+          </div>
+        </dialog>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+} @if (data.length == 0) {
+<div class="grid place-items-center h-96 bg-white mt-5 p-2">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="icon icon-tabler icons-tabler-outline icon-tabler-speakerphone stroke-amber-600 bg-amber-100 rounded-full"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M18 8a3 3 0 0 1 0 6" />
+    <path d="M10 8v11a1 1 0 0 1 -1 1h-1a1 1 0 0 1 -1 -1v-5" />
+    <path
+      d="M12 8h0l4.524 -3.77a.9 .9 0 0 1 1.476 .692v12.156a.9 .9 0 0 1 -1.476 .692l-4.524 -3.77h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h8"
+    />
+  </svg>
+  <h1 class="text-xl font-bold">No results found</h1>
+  <p class="text-gray-500 font-semibold text-sm">
+    Would you like to publish a new Internship post ?
+  </p>
+  <button
+    (click)="openModal()"
+    class="btn btn-warning text-white flex items-center"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-5 h-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+      <path d="M9 12h6" />
+      <path d="M12 9v6" />
+    </svg>
+    <span>New Internship</span>
+  </button>
+</div>
+} }

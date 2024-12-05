@@ -1,0 +1,106 @@
+<div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="mx-auto max-w-lg flex flex-col space-y-6">
+
+      <p class="text-center text-lg font-medium">Create a new account</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label for="firstName" class="sr-only">First Name</label>
+          <input
+            id="firstName"
+            formControlName="firstName"
+            type="text"
+            class="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
+            placeholder="Enter your first name"
+          />
+        </div>
+
+        <div>
+          <label for="lastName" class="sr-only">Last Name</label>
+          <input
+            id="lastName"
+            formControlName="lastName"
+            type="text"
+            class="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
+            placeholder="Enter your last name"
+          />
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-4">
+        <label for="email" class="sr-only">Email</label>
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          class="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label for="password" class="sr-only">Password</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          class="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
+          placeholder="Enter your password"
+        />
+      </div>
+
+      <!-- Phone -->
+      <div class="mb-4">
+        <label for="phone" class="sr-only">Phone</label>
+        <input
+          id="phone"
+          formControlName="phone"
+          type="tel"
+          class="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
+          placeholder="Enter your phone number"
+        />
+      </div>
+
+      <!-- Role -->
+      <div class="mb-4">
+        <label for="role" class="sr-only">Role</label>
+        <select
+          id="role"
+          formControlName="role"
+          class="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
+        >
+          <option value="" disabled selected>Select your role</option>
+          <option value="INTERNSHIP_SEEKER">Internship Seeker</option>
+          <option value="EMPLOYER">Employer</option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        @if (!isLoading) {
+          <button
+            type="submit"
+            class="block w-full rounded-lg bg-orange-600 px-5 py-3 text-sm font-medium text-white"
+          >
+            Register
+          </button>
+
+        } @else {
+          <button class="btn">
+            <span class="loading loading-spinner"></span>
+            Loading
+          </button>
+        }
+      </div>
+
+      <!-- Sign-in Link -->
+      <p class="text-center text-sm text-gray-500 mt-4">
+        Already have an account?
+        <a class="underline" routerLink="/login">Sign in</a>
+      </p>
+    </div>
+  </form>
+</div>

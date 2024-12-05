@@ -1,0 +1,35 @@
+<div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-lg">
+    <form [formGroup]="verifyForm" (ngSubmit)="onSubmit()" class="mb-0 mt-6 space-y-4 rounded-lg p-4 sm:p-6 lg:p-8">
+      <p class="text-center text-lg font-medium">Enter Verification Code</p>
+
+      <!-- Verification Code Input -->
+      <div>
+        <label for="verificationCode" class="sr-only">Verification Code</label>
+        <div class="relative">
+          <input
+            id="verificationCode"
+            formControlName="verificationCode"
+            type="text"
+            maxlength="6"
+            class="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
+            placeholder="Enter your verification code"
+          />
+          <div *ngIf="verifyForm.controls['verificationCode'].invalid && verifyForm.controls['verificationCode'].touched" class="text-red-500 text-sm">
+            Please enter the verification code.
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="block w-full rounded-lg bg-orange-600 px-5 py-3 text-sm font-medium text-white">
+        Verify Code
+      </button>
+
+      <!-- Link to Resend Code -->
+      <p class="text-center text-sm text-gray-500">
+        Didn't receive the code? <a class="underline" href="#">Resend Code</a>
+      </p>
+    </form>
+  </div>
+</div>

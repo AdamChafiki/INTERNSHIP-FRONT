@@ -1,0 +1,107 @@
+<header class="container mx-auto">
+  <div class="navbar  h-20">
+    <div class="navbar-start">
+      <a routerLink="">
+        <img ngSrc="./logo.png" alt="logo" priority width="80" height="80">
+      </a>
+    </div>
+    <div class="navbar-center">
+      <ul class="menu  lg:menu-horizontal rounded-box">
+        <li>
+          <a routerLink="internships" routerLinkActive="active-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/>
+              <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"/>
+              <path d="M12 12l0 .01"/>
+              <path d="M3 13a20 20 0 0 0 18 0"/>
+            </svg>
+            Internships
+          </a>
+        </li>
+        <li>
+          <a>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="icon icon-tabler icons-tabler-outline icon-tabler-building">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M3 21l18 0"/>
+              <path d="M9 8l1 0"/>
+              <path d="M9 12l1 0"/>
+              <path d="M9 16l1 0"/>
+              <path d="M14 8l1 0"/>
+              <path d="M14 12l1 0"/>
+              <path d="M14 16l1 0"/>
+              <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"/>
+            </svg>
+            Companies
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="navbar-end space-x-3">
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+          <div class="w-10 rounded-full">
+            <img
+              alt="avatar"
+              src="https://img.freepik.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3407.jpg?w=360"/>
+          </div>
+        </div>
+        @if (this.authService.isLoggedIn()) {
+          <ul
+            tabindex="0"
+            class="menu menu-md dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            <li>
+              <a (click)="onLinkChange()" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="icon icon-tabler icons-tabler-outline icon-tabler-layout-dashboard">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1"/>
+                  <path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1"/>
+                  <path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1"/>
+                  <path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1"/>
+                </svg>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a (click)="authService.logout()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2"/>
+                  <path d="M15 12h-12l3 -3"/>
+                  <path d="M6 15l-3 -3"/>
+                </svg>
+                Log out
+              </a>
+            </li>
+          </ul>
+        } @else {
+          <ul
+            tabindex="0"
+            class="menu menu-md dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            <li>
+              <a routerLink="/login">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2"/>
+                  <path d="M3 12h13l-3 -3"/>
+                  <path d="M13 15l3 -3"/>
+                </svg>
+                Sign in
+              </a>
+            </li>
+          </ul>
+        }
+      </div>
+    </div>
+  </div>
+</header>

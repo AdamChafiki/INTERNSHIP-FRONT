@@ -1,0 +1,98 @@
+<div>
+  @if (isLoading) {
+    <div class="flex w-96 flex-col gap-4 p-2">
+      <div class="skeleton h-32 w-full"></div>
+      <div class="skeleton h-4 w-28"></div>
+      <div class="skeleton h-4 w-full"></div>
+      <div class="skeleton h-4 w-full"></div>
+      <div class="skeleton h-4 w-full"></div>
+      <div class="skeleton h-4 w-full"></div>
+
+    </div>
+  } @else {
+    <div class="p-2 mt-5 flex space-x-2">
+      <div class="bg-white shadow-md p-4 rounded-lg w-3/4 h-[500px]">
+        <div class="avatar  placeholder p-2 w-full">
+          <div class="bg-gray-700 mx-auto text-white  w-16 rounded-full">
+            <span class="text-xl"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                       fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                       stroke-linejoin="round"
+                                       class="icon icon-tabler icons-tabler-outline icon-tabler-building"><path
+              stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l18 0"/><path d="M9 8l1 0"/><path
+              d="M9 12l1 0"/><path d="M9 16l1 0"/><path d="M14 8l1 0"/><path d="M14 12l1 0"/><path d="M14 16l1 0"/><path
+              d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"/></svg></span>
+          </div>
+        </div>
+        <h1 class="text-center">{{data.companyName}}</h1>
+        <div class="divider w-96 mx-auto"></div>
+        <div class="space-y-4" >
+          <h1 class="text-2xl font-light text-center">{{ data.title }}</h1>
+          <div class="flex space-x-4 justify-center">
+            <p class="text- font-semibold text-gray-500 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="icon icon-tabler icons-tabler-outline mr-2 icon-tabler-clock-hour-4">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
+                <path d="M12 12l3 2"/>
+                <path d="M12 7v5"/>
+              </svg>
+              {{ data.duration }} Months
+            </p>
+            <p class="text-lg font-semibold text-gray-500 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="icon icon-tabler icons-tabler-outline icon-tabler-file mr-2">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>
+              </svg>
+              {{ data.type }}
+            </p>
+            <p class="text-lg font-semibold text-gray-500 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-clock mr-2">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M10.5 21h-4.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3"/>
+                <path d="M16 3v4"/>
+                <path d="M8 3v4"/>
+                <path d="M4 11h10"/>
+                <path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>
+                <path d="M18 16.5v1.5l.5 .5"/>
+              </svg>
+              {{ data.presence }}
+            </p>
+            <p class="text-lg font-semibold text-gray-500 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>
+                <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"/>
+              </svg>
+              {{ data.location }}
+            </p>
+          </div>
+          <h2 class="text-xl font-bold">Internship description</h2>
+          <p class="text-lg font-semibold text-gray-500">{{ data.description }}</p>
+        </div>
+      </div>
+      <div class="flex flex-col space-y-2 w-1/4">
+        <h1 class="text-gray-700 font-bold">Published at :</h1>
+        <p class="text-sm font-semibold ">{{ data.createdAt }}</p>
+        <button (click)="applyToInternship()" class="btn btn-lg btn-success text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="icon icon-tabler icons-tabler-outline icon-tabler-check">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M5 12l5 5l10 -10"/>
+          </svg>
+          Apply Now
+        </button>
+      </div>
+    </div>
+  }
+</div>
+
+

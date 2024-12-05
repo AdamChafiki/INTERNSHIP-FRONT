@@ -1,0 +1,485 @@
+<main>
+  <div
+    class="bg-blue-100 p-4 rounded-lg w-full flex justify-between items-center shadow-sm"
+  >
+    <p class="text-xl text-blue-500 uppercase font-bold">Internship Seekers</p>
+    @if(isLoading){
+    <div></div>
+    } @else { @if(data && data != null){
+    <a
+      [routerLink]="'/internship-seeker/' + data.id"
+      class="flex items-center link link-primary"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-user-scan mr-2"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M10 9a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+        <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+        <path d="M4 16v2a2 2 0 0 0 2 2h2" />
+        <path d="M16 4h2a2 2 0 0 1 2 2v2" />
+        <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+        <path d="M8 16a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2" />
+      </svg>
+      View Profile</a
+    >
+    }@else {
+    <button
+      (click)="openModal()"
+      class="btn btn-warning text-white flex items-center space-x-2"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+        <path d="M9 12h6" />
+        <path d="M12 9v6" />
+      </svg>
+      <span>Add Profile</span>
+    </button>
+    } }
+  </div>
+
+  <!-- Modal -->
+  <dialog id="my_modal_1" class="modal">
+    <div class="modal-box">
+      <form
+        class="space-y-6"
+        [formGroup]="internshipSeekerForm"
+        (ngSubmit)="addInternshipSeeker()"
+      >
+        <!-- School Name -->
+        <div>
+          <label
+            for="schoolName"
+            class="block text-sm font-medium text-gray-700"
+            >School Name</label
+          >
+          <input
+            id="schoolName"
+            formControlName="schoolName"
+            type="text"
+            placeholder="School Name"
+            class="w-full rounded-lg border-gray-300 p-3 text-sm"
+          />
+        </div>
+
+        <!-- Level -->
+        <div>
+          <label for="level" class="block text-sm font-medium text-gray-700"
+            >Level</label
+          >
+          <input
+            id="level"
+            formControlName="level"
+            type="text"
+            placeholder="Level (e.g., Bachelor, Master)"
+            class="w-full rounded-lg border-gray-300 p-3 text-sm"
+          />
+        </div>
+
+        <!-- Specialty -->
+        <div>
+          <label for="specialty" class="block text-sm font-medium text-gray-700"
+            >Specialty</label
+          >
+          <input
+            id="specialty"
+            formControlName="specialty"
+            type="text"
+            placeholder="Specialty"
+            class="w-full rounded-lg border-gray-300 p-3 text-sm"
+          />
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label
+            for="description"
+            class="block text-sm font-medium text-gray-700"
+            >Description</label
+          >
+          <textarea
+            id="description"
+            formControlName="description"
+            rows="4"
+            placeholder="Brief description"
+            class="w-full rounded-lg border-gray-300 p-3 text-sm"
+          ></textarea>
+        </div>
+
+        <!-- Duration -->
+        <div>
+          <label for="duration" class="block text-sm font-medium text-gray-700"
+            >Duration (Months)</label
+          >
+          <input
+            id="duration"
+            type="number"
+            formControlName="duration"
+            placeholder="Duration in Months"
+            class="w-full rounded-lg border-gray-300 p-3 text-sm"
+          />
+        </div>
+
+        <!-- Start Date -->
+        <div>
+          <label for="startDate" class="block text-sm font-medium text-gray-700"
+            >Start Date</label
+          >
+          <input
+            id="startDate"
+            formControlName="startDate"
+            type="date"
+            class="w-full rounded-lg border-gray-300 p-3 text-sm"
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="w-full sm:w-auto bg-blue-500 text-white px-5 py-3 rounded-lg font-medium hover:bg-blue-600"
+        >
+          Submit Internship Seeker
+        </button>
+      </form>
+
+      <div class="modal-action">
+        <button class="btn" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  @if (isLoading) {
+  <h1>Loading....</h1>
+  } @if(data && data != null){
+  <div class="p-7 bg-white rounded-md my-5">
+    <h1 class="text-2xl font-semibold text-orange-600">
+      Information Profile :
+    </h1>
+    <div class="mt-5 grid grid-cols-2 gap-4">
+      <div class="flex items-center">
+        <h1 class="font-medium text-gray-900">School :</h1>
+        <p class="text-gray-700">{{ data.schoolName }}</p>
+      </div>
+      <div class="flex items-center">
+        <h1 class="font-medium text-gray-900">Level :</h1>
+        <p class="text-gray-700">{{ data.level }}</p>
+      </div>
+      <div class="flex items-center">
+        <h1 class="font-medium text-gray-900">Specialty :</h1>
+        <p class="text-gray-700">{{ data.specialty }}</p>
+      </div>
+      <div class="flex flex-col items-start">
+        <h1 class="font-medium text-gray-900">Description:</h1>
+        <p class="text-gray-700">
+          {{ data.description }}
+        </p>
+      </div>
+
+      <div class="flex items-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="gray"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check mr-2"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path
+            d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"
+          />
+          <path d="M16 3v4" />
+          <path d="M8 3v4" />
+          <path d="M4 11h16" />
+          <path d="M15 19l2 2l4 -4" />
+        </svg>
+        <h1 class="font-medium text-gray-900">Available from :</h1>
+        <p class="text-gray-700">
+          {{ data.startDate }}
+        </p>
+      </div>
+      <div class="flex items-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="gray"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-11 mr-2"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+          <path d="M12 12l-2 -3" />
+          <path d="M12 7v5" />
+        </svg>
+        <h1 class="font-medium text-gray-900">Available For :</h1>
+        <p class="text-gray-700">{{ data.duration }} Months</p>
+      </div>
+    </div>
+    <button class="btn bg-orange-500 text-white mt-5" (click)="openModal2()">
+      Update
+    </button>
+    <!-- MODAL -->
+    <dialog id="my_modal_2" class="modal">
+      <div class="modal-box">
+        <form
+          class="space-y-6"
+          [formGroup]="updateInternshipSeekerForm"
+          (ngSubmit)="updateInternshipSeeker()"
+        >
+          <!-- School Name -->
+          <div>
+            <label
+              for="schoolName"
+              class="block text-sm font-medium text-gray-700"
+              >School Name</label
+            >
+            <input
+              id="schoolName"
+              formControlName="schoolName"
+              type="text"
+              placeholder="School Name"
+              class="w-full rounded-lg border-gray-300 p-3 text-sm"
+            />
+          </div>
+
+          <!-- Level -->
+          <div>
+            <label for="level" class="block text-sm font-medium text-gray-700"
+              >Level</label
+            >
+            <input
+              id="level"
+              formControlName="level"
+              type="text"
+              placeholder="Level (e.g., Bachelor, Master)"
+              class="w-full rounded-lg border-gray-300 p-3 text-sm"
+            />
+          </div>
+
+          <!-- Specialty -->
+          <div>
+            <label
+              for="specialty"
+              class="block text-sm font-medium text-gray-700"
+              >Specialty</label
+            >
+            <input
+              id="specialty"
+              formControlName="specialty"
+              type="text"
+              placeholder="Specialty"
+              class="w-full rounded-lg border-gray-300 p-3 text-sm"
+            />
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label
+              for="description"
+              class="block text-sm font-medium text-gray-700"
+              >Description</label
+            >
+            <textarea
+              id="description"
+              formControlName="description"
+              rows="4"
+              placeholder="Brief description"
+              class="w-full rounded-lg border-gray-300 p-3 text-sm"
+            ></textarea>
+          </div>
+
+          <!-- Duration -->
+          <div>
+            <label
+              for="duration"
+              class="block text-sm font-medium text-gray-700"
+              >Duration (Months)</label
+            >
+            <input
+              id="duration"
+              type="number"
+              formControlName="duration"
+              placeholder="Duration in Months"
+              class="w-full rounded-lg border-gray-300 p-3 text-sm"
+            />
+          </div>
+
+          <!-- Start Date -->
+          <div>
+            <label
+              for="startDate"
+              class="block text-sm font-medium text-gray-700"
+              >Start Date</label
+            >
+            <input
+              id="startDate"
+              formControlName="startDate"
+              type="date"
+              class="w-full rounded-lg border-gray-300 p-3 text-sm"
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full sm:w-auto bg-blue-500 text-white px-5 py-3 rounded-lg font-medium hover:bg-blue-600"
+          >
+            Update Internship Seeker
+          </button>
+        </form>
+
+        <div class="modal-action">
+          <button class="btn" (click)="closeModal2()">Close</button>
+        </div>
+      </div>
+    </dialog>
+  </div>
+  }@else{
+  <div class="grid place-items-center h-96 bg-white mt-5 p-2">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="icon icon-tabler icons-tabler-outline icon-tabler-id-badge-2 stroke-amber-600 bg-amber-100 rounded-full"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M7 12h3v4h-3z" />
+      <path
+        d="M10 6h-6a1 1 0 0 0 -1 1v12a1 1 0 0 0 1 1h16a1 1 0 0 0 1 -1v-12a1 1 0 0 0 -1 -1h-6"
+      />
+      <path
+        d="M10 3m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"
+      />
+      <path d="M14 16h2" />
+      <path d="M14 12h4" />
+    </svg>
+    <h1 class="text-xl font-bold">Profile Not Found</h1>
+    <p class="text-gray-500 font-semibold text-sm">
+      Would you like to make your profile ?
+    </p>
+    <button
+      (click)="openModal()"
+      class="btn btn-warning text-white flex items-center"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+        <path d="M9 12h6" />
+        <path d="M12 9v6" />
+      </svg>
+      <span>New Profile</span>
+    </button>
+  </div>
+  } @if (data.resumeUrl !=null) {
+  <div class="p-4 rounded-xl bg-white space-y-5 shadow-md">
+    <h1 class="text-2xl font-semibold text-orange-600">Your Cv :</h1>
+    <button (click)="getCv(data.id)" class="btn btn-outline btn-warning">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-file-cv"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+        <path
+          d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"
+        />
+        <path d="M11 12.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0" />
+        <path d="M13 11l1.5 6l1.5 -6" />
+      </svg>
+      {{ getCvName(data.resumeUrl) }}
+    </button>
+  </div>
+  }@else {
+  <div class="flex">
+    <div class="w-3/5"></div>
+    <div
+      class="p-4 rounded-xl bg-white w-2/5 grid place-items-center space-y-5 shadow-md"
+    >
+      <p class="text-sm font-semibold text-gray-500">MY CV</p>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="50"
+        height="50"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf stroke-amber-600 bg-amber-100 rounded-full"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+        <path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" />
+        <path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" />
+        <path d="M17 18h2" />
+        <path d="M20 15h-3v6" />
+        <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1z" />
+      </svg>
+      <p class="text-gray-500 font-semibold text-sm">You have no CV attached</p>
+      <form (ngSubmit)="uploadCv()">
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          class="file-input file-input-bordered file-input-warning w-full max-w-xs"
+        />
+        @if (cvLoading) {<button class="btn btn-warning btn-square mt-2">
+          <span class="loading loading-spinner"></span>
+        </button>
+        }@else {
+        <button type="submit" class="btn btn-warning mt-2">Upload CV</button>
+        }
+      </form>
+    </div>
+  </div>
+  }
+</main>
