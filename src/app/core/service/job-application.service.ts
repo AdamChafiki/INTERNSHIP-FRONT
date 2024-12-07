@@ -25,6 +25,12 @@ export class JobApplicationService {
     );
   }
 
+  getApplicationsByCompanyId(companyId: any) {
+    return this.http.get(
+      `${this.BASE_URL}/job-application/company/${companyId}`
+    );
+  }
+
   deleteApplication(internshipSeekerId: any) {
     return this.http.delete(
       `${this.BASE_URL}/job-application/internshipSeeker/${internshipSeekerId}`

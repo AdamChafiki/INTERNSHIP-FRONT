@@ -4,10 +4,10 @@
   >
     <p class="text-xl text-blue-500 uppercase font-bold">Internship Seekers</p>
     @if(isLoading){
-    <div></div>
-    } @else { @if(data && data != null){
+    <div class="div">...</div>
+    }@else { @if(!isLoading && data !== null){
     <a
-      [routerLink]="'/internship-seeker/' + data.id"
+      [routerLink]="'/internship-seeker/' + data.user.id"
       class="flex items-center link link-primary"
     >
       <svg
@@ -55,7 +55,7 @@
     </button>
     } }
   </div>
-
+  <!--  -->
   <!-- Modal -->
   <dialog id="my_modal_1" class="modal">
     <div class="modal-box">
@@ -168,7 +168,7 @@
 
   @if (isLoading) {
   <h1>Loading....</h1>
-  } @if(data && data != null){
+  } @else { @if(!isLoading && data !== null){
   <div class="p-7 bg-white rounded-md my-5">
     <h1 class="text-2xl font-semibold text-orange-600">
       Information Profile :
@@ -411,7 +411,7 @@
       <span>New Profile</span>
     </button>
   </div>
-  } @if (data.resumeUrl !=null) {
+  } } @if (data.resumeUrl !=null) {
   <div class="p-4 rounded-xl bg-white space-y-5 shadow-md">
     <h1 class="text-2xl font-semibold text-orange-600">Your Cv :</h1>
     <button (click)="getCv(data.id)" class="btn btn-outline btn-warning">

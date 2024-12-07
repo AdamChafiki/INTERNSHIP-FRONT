@@ -106,7 +106,7 @@ export class ProfileComponent implements OnInit {
     // http
     this.internshipSeekerService.updateInternship(form).subscribe({
       next: (response) => {
-        this.data = response;
+        this.ngOnInit();
         this.updateInternshipSeekerForm.reset();
         this.isLoading = false;
         this.closeModal2();

@@ -73,7 +73,7 @@ export class SingleInternshipComponent implements OnInit {
           },
           error: (err) => {
             console.error('Error applying for internship:', err);
-            this.toastr.error(`You already applied.`, 'Error', {
+            this.toastr.warning(`You already applied.`, 'Warning', {
               positionClass: 'toast-bottom-right',
               closeButton: true,
             });

@@ -77,7 +77,7 @@ export class CompanyComponent implements OnInit {
     if (decodedToken?.userId) {
       // @ts-ignore
 
-      this.companyService.updateCompany(updateData, decodedToken.userId).subscribe({
+      this.companyService.updateCompany(updateData, this.data.id).subscribe({
         next: (response) => {
           console.log('Company updated successfully:', response);
           this.closeModal1();
