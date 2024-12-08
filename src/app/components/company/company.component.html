@@ -1,0 +1,59 @@
+<main class="p-8">
+  <div
+    class="bg-blue-100 p-4 rounded-lg w-full flex justify-between items-center shadow-sm mb-5"
+  >
+    <p class="text-xl text-blue-500 uppercase font-bold">Companies</p>
+  </div>
+  @if (isLoading) {
+  <div class="flex justify-around">
+    <div class="flex w-52 flex-col gap-4">
+      <div class="skeleton h-32 w-full"></div>
+      <div class="skeleton h-4 w-28"></div>
+      <div class="skeleton h-4 w-full"></div>
+      <div class="skeleton h-4 w-full"></div>
+    </div>
+    <div class="flex w-52 flex-col gap-4">
+      <div class="skeleton h-32 w-full"></div>
+      <div class="skeleton h-4 w-28"></div>
+      <div class="skeleton h-4 w-full"></div>
+      <div class="skeleton h-4 w-full"></div>
+    </div>
+    <div class="flex w-52 flex-col gap-4">
+      <div class="skeleton h-32 w-full"></div>
+      <div class="skeleton h-4 w-28"></div>
+      <div class="skeleton h-4 w-full"></div>
+      <div class="skeleton h-4 w-full"></div>
+    </div>
+  </div>
+  }@else { @if (companies) { @for (company of companies; track company.id) {
+  <div class="bg-white shadow rounded-lg p-6 w-52 h-32 text-center">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="icon icon-tabler icons-tabler-outline icon-tabler-building mx-auto"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M3 21l18 0" />
+      <path d="M9 8l1 0" />
+      <path d="M9 12l1 0" />
+      <path d="M9 16l1 0" />
+      <path d="M14 8l1 0" />
+      <path d="M14 12l1 0" />
+      <path d="M14 16l1 0" />
+      <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" />
+    </svg>
+    <a routerLink="/company/{{ company.id }}" class="text-xl font-bold text-gray-800 link link-primary">{{
+      company.name
+    }}</a>
+  </div>
+  } }@else{
+  <div>there is no company yet !</div>
+  } }
+</main>

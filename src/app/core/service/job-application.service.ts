@@ -31,9 +31,9 @@ export class JobApplicationService {
     );
   }
 
-  deleteApplication(internshipSeekerId: any) {
+  deleteApplication(applicationId: any) {
     return this.http.delete(
-      `${this.BASE_URL}/job-application/internshipSeeker/${internshipSeekerId}`
+      `${this.BASE_URL}/job-application/internshipSeeker/${applicationId}`
     );
   }
 }

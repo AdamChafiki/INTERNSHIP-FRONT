@@ -17,6 +17,8 @@ import { ProfileComponent } from './components/dashboard-internship-seeker/profi
 import { SingleProfileComponent } from './components/single-profile/single-profile.component';
 import { DashboardSeekerComponent } from './components/dashboard-internship-seeker/dashboard/dashboard.component';
 import { ApplicationComponent } from './components/dashboard-employer/application/application.component';
+import { CompanyAllComponent } from './components/company/company.component';
+import { SingleCompanyComponent } from './components/single-company/single-company.component';
 
 export const routes: Routes = [
   {
@@ -36,6 +38,10 @@ export const routes: Routes = [
   {
     path: 'internships',
     component: InternshipComponent,
+  },
+  {
+    path: 'company',
+    component: CompanyAllComponent,
   },
   {
     path: 'internship/:id',
@@ -80,5 +86,9 @@ export const routes: Routes = [
   {
     path: 'internship-seeker/:id',
     component: SingleProfileComponent,
+  },
+  {
+    path: 'company/:id',
+    component: SingleCompanyComponent,
   },
 ];

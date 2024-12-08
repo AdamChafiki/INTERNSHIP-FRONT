@@ -60,13 +60,13 @@ export class JobApplicationComponent {
   }
 
 
-  deleteApplication(internshipSeekerId: any) {
-    console.log(internshipSeekerId);
+  deleteApplication(applicationId: any) {
+    console.log(applicationId);
     this.isLoading = true;
     this.internshipApplicationService
-      .deleteApplication(internshipSeekerId)
+      .deleteApplication(applicationId)
       .subscribe({
-        next: (res) => {          
+        next: (res) => {
           this.fetchApplications();
           this.isLoading = false;
         },

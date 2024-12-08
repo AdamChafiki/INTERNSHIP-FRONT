@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { InternshipService } from '../../core/service/internship.service';
 import { AuthService } from '../../core/service/auth-service.component';
 import { JobApplicationService } from '../../core/service/job-application.service';
@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-single-internship',
   standalone: true,
-  imports: [],
+  imports:  [RouterLink],
   templateUrl: './single-internship.component.html',
 })
 export class SingleInternshipComponent implements OnInit {

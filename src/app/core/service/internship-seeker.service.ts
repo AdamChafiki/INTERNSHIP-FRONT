@@ -17,6 +17,8 @@ export class InternshipSeekerService {
     );
   }
 
+  
+
   addInternship(req: any) {
     return this.http.post<any>(`${this.BASE_URL}/internshipSeeker/add`, req);
   }

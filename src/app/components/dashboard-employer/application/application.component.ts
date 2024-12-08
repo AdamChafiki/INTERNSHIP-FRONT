@@ -8,7 +8,7 @@ import { NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-application',
   standalone: true,
-  imports: [RouterLink,NgFor,NgIf], // Add necessary imports (e.g., HttpClientModule, ReactiveFormsModule, CommonModule)
+  imports: [RouterLink, NgFor, NgIf], // Add necessary imports (e.g., HttpClientModule, ReactiveFormsModule, CommonModule)
   templateUrl: './application.component.html',
 })
 export class ApplicationComponent implements OnInit {
@@ -27,9 +27,9 @@ export class ApplicationComponent implements OnInit {
     const decodedToken = this.authService.decodeToken(token);
 
     // Check if userId exists in the token
-        // @ts-ignore
+    // @ts-ignore
     if (decodedToken?.userId) {
-          // @ts-ignore
+      // @ts-ignore
 
       this.fetchCompany(decodedToken.userId);
     } else {
@@ -59,12 +59,28 @@ export class ApplicationComponent implements OnInit {
       .getApplicationsByCompanyId(companyId)
       .subscribe({
         next: (applications) => {
-          this.applications = applications; 
+          this.applications = applications;
           console.log('Applications:', applications);
         },
         error: (err) => {
           console.error('Error fetching applications:', err);
         },
       });
+  }
+
+  sortByDate(ascending: boolean): void {
+    this.applications.sort((a: any, b: any) => {
+      const dateA = new Date(a.appliedAt).getTime();
+      const dateB = new Date(b.appliedAt).getTime();
+      return ascending ? dateA - dateB : dateB - dateA;
+    });
+  }
+  onSortChange(event: Event): void {
+    const selectedValue = (event.target as HTMLSelectElement).value; // Get the selected value from the dropdown
+    if (selectedValue === 'asc') {
+      this.sortByDate(true); // Call sortByDate with ascending
+    } else if (selectedValue === 'desc') {
+      this.sortByDate(false); // Call sortByDate with descending
+    }
   }
 }
