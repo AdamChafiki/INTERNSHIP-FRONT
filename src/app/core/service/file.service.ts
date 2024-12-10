@@ -15,10 +15,16 @@ export class FileService {
       responseType: 'blob',
     });
   }
-  updateCv(file: File, userId: number) {
+  updateCv(file: File, userId: any) {
+    console.log(file, userId);
+    
     const formData = new FormData();
     formData.append('file', file); // Attach the file
     formData.append('userId', userId.toString()); // Attach the user ID as a string
+
+    console.log(formData);
+    
+    
 
     return this.http.post(`${this.BASE_URL}/upload`, formData, {
       responseType: 'text',

@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-single-internship',
   standalone: true,
-  imports:  [RouterLink],
+  imports:  [],
   templateUrl: './single-internship.component.html',
 })
 export class SingleInternshipComponent implements OnInit {
@@ -17,6 +17,7 @@ export class SingleInternshipComponent implements OnInit {
   internshipSeekerId: string | null = null; // Holds the internship seeker ID
   userId: string | null = null;
   data: any; // Holds the internship data
+  isAllowed = true
   isLoading = true; // Flag for loading state
 
   constructor(
@@ -44,12 +45,17 @@ export class SingleInternshipComponent implements OnInit {
   private fetchInternshipSeeker(): void {
     const token = this.authService.getToken();
     const decodedToken = this.authService.decodeToken(token);
+    console.log(decodedToken);
+    
     // @ts-ignore
     this.userId = decodedToken?.userId;
     if (this.userId) {
       this.internshipSeekerService.getInternshipSeeker(this.userId).subscribe({
         next: (response) => {
-          this.internshipSeekerId = response?.id; // Set the internship seeker ID
+          if (response?.id) {
+            this.internshipSeekerId = response?.id; // Set the internship seeker ID
+            this.isAllowed= false
+          }
           console.log('Internship Seeker ID:', this.internshipSeekerId);
         },
         error: (err) => {

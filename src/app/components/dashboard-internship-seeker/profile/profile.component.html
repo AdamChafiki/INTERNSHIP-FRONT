@@ -5,7 +5,7 @@
     <p class="text-xl text-blue-500 uppercase font-bold">Internship Seekers</p>
     @if(isLoading){
     <div class="skeleton h-10 w-32"></div>
-    }@else { @if(!isLoading && data !== null){
+    } @else { @if (data && data != null) {
     <a
       [routerLink]="'/internship-seeker/' + data.user.id"
       class="flex items-center link link-primary"
@@ -32,6 +32,7 @@
       </svg>
       View Profile</a
     >
+
     }@else {
     <button
       (click)="openModal()"
@@ -55,6 +56,7 @@
     </button>
     } }
   </div>
+
   <!--  -->
   <!-- Modal -->
   <dialog id="my_modal_1" class="modal">
@@ -173,7 +175,7 @@
     <div class="skeleton h-4 w-full"></div>
     <div class="skeleton h-4 w-full"></div>
   </div>
-  } @else { @if(!isLoading && data !== null){
+  } @else { @if(data && data !== null){
   <div class="p-7 bg-white rounded-md my-5">
     <h1 class="text-2xl font-semibold text-orange-600">
       Information Profile :
@@ -416,10 +418,10 @@
       <span>New Profile</span>
     </button>
   </div>
-  } } @if (data.resumeUrl !=null) {
+  } } @if(data !=null){ @if (data?.resumeUrl !=null) {
   <div class="p-4 rounded-xl bg-white space-y-5 shadow-md">
     <h1 class="text-2xl font-semibold text-orange-600">Your Cv :</h1>
-    <button (click)="getCv(data.id)" class="btn btn-outline btn-warning">
+    <button (click)="getCv(data.user.id)" class="btn btn-outline btn-warning">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -471,7 +473,7 @@
         <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1z" />
       </svg>
       <p class="text-gray-500 font-semibold text-sm">You have no CV attached</p>
-      <form (ngSubmit)="uploadCv()">
+      <form (ngSubmit)="uploadCv()" class="flex flex-col">
         <input
           type="file"
           (change)="onFileSelected($event)"
@@ -486,5 +488,7 @@
       </form>
     </div>
   </div>
+  } }@else {
+  <span></span>
   }
 </main>

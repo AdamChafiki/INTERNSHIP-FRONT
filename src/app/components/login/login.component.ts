@@ -1,17 +1,19 @@
-import {Component} from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
-import {AuthService} from '../../core/service/auth-service.component';
+import { Component } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../core/service/auth-service.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  imports: [
-    ReactiveFormsModule,
-    RouterLink
-  ],
-  standalone: true
+  imports: [ReactiveFormsModule, RouterLink],
+  standalone: true,
 })
 export class LoginComponent {
   //ToDo Valid Form
@@ -20,16 +22,17 @@ export class LoginComponent {
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
   });
-
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private toastr: ToastrService
-  ) {
-  }
+  ) {}
 
   onSubmit() {
     this.isLoading = true;
@@ -38,11 +41,15 @@ export class LoginComponent {
     this.authService.doLogin(loginForm).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
-        this.toastr.success(`Login Success!`, 'Success', {
-          positionClass: 'toast-bottom-right',
-          closeButton: true,
-        });
-        this.router.navigate(['/']);
+        const decodedToken = this.authService.decodeToken(response.token);
+        console.log(decodedToken);
+
+        // @ts-ignore
+        if (decodedToken?.roles?.includes('ROLE_EMPLOYER')) {
+          this.router.navigate(['/employer-dashboard']);
+        } else {
+          this.router.navigate(['/internship-seeker-dashboard']);
+        }
       },
       error: (err) => {
         this.isLoading = false;

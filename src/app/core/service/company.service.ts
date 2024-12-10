@@ -24,7 +24,9 @@ export class CompanyService {
   }
 
   getLatestInternships(companyId: any) {
-    return this.http.get<any>(`${this.BASE_URL}/company/${companyId}`);
+    return this.http.get<any>(
+      `${this.BASE_URL}/company/${companyId}/latest-internships`
+    );
   }
 
   getCompanyById(companyId: any) {

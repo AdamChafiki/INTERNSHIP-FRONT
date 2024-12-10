@@ -47,7 +47,7 @@ export class RegisterComponent {
           closeButton: true,
         });
 
-        this.router.navigate(["/verify-account"])
+        this.router.navigate(["/login"])
 
       },
       error: (err) => {

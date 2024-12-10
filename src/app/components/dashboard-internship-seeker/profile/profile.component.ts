@@ -10,16 +10,18 @@ import { AuthService } from '../../../core/service/auth-service.component';
 import { InternshipSeekerService } from '../../../core/service/internship-seeker.service';
 import { RouterLink } from '@angular/router';
 import { FileService } from '../../../core/service/file.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [FormsModule, ReactiveFormsModule, RouterLink, NgIf],
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
   data: any;
   userId: any;
+  userInternship: any;
   isLoading = true;
   selectedFile: File | null = null;
   cvLoading = false;
@@ -49,18 +51,25 @@ export class ProfileComponent implements OnInit {
     private file: FileService
   ) {}
   ngOnInit(): void {
-
     const token = this.authService.getToken();
     const decodedToken = this.authService.decodeToken(token);
     // @ts-ignore
     this.userId = decodedToken?.userId;
+    console.log(this.userId);
+
     this.internshipSeekerService.getInternshipSeeker(this.userId).subscribe({
       next: (response) => {
         this.data = response;
         console.log('data', this.data);
-        this.isLoading = false;
+        if (response == null) {
+          this.isLoading = false;
+        } else {
+          this.userInternship = this.data.id;
+          this.isLoading = false;
+        }
       },
       error: (err) => {
+        this.data = null;
         this.isLoading = false;
         console.error('Error :', err);
       },
@@ -82,6 +91,7 @@ export class ProfileComponent implements OnInit {
         this.internshipSeekerForm.reset();
         this.isLoading = false;
         this.closeModal();
+        this.ngOnInit();
         this.toastr.success(`Added Sucessfully`, 'Success', {
           positionClass: 'toast-bottom-right',
           closeButton: true,
@@ -101,7 +111,6 @@ export class ProfileComponent implements OnInit {
       userId: this.userId,
     };
     console.log(form);
-    console.log('form');
 
     // http
     this.internshipSeekerService.updateInternship(form).subscribe({
@@ -151,19 +160,21 @@ export class ProfileComponent implements OnInit {
     this.cvLoading = true;
     if (!this.selectedFile) {
       alert('Please select a file before uploading!');
+      this.cvLoading = false;
       return;
     }
+    console.log(this.selectedFile, this.userInternship);
 
-    this.file.updateCv(this.selectedFile, this.userId).subscribe({
+    this.file.updateCv(this.selectedFile, this.userInternship).subscribe({
       next: (response) => {
         // Handle success
         console.log('File uploaded successfully:', response);
-        this.cvLoading = false;
         this.ngOnInit();
-        this.toastr.success('File uploaded successfully', 'Success',{
+
+        this.toastr.success('File uploaded successfully', 'Success', {
           positionClass: 'toast-bottom-right',
           closeButton: true,
-          timeOut: 1000
+          timeOut: 1000,
         });
       },
       error: (err) => {

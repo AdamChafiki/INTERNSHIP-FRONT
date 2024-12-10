@@ -1,8 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {CompanyService} from '../../../core/service/company.service';
-import {AuthService} from '../../../core/service/auth-service.component';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
+import { Component, OnInit } from '@angular/core';
+import { CompanyService } from '../../../core/service/company.service';
+import { AuthService } from '../../../core/service/auth-service.component';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-company',
@@ -20,7 +25,7 @@ export class CompanyComponent implements OnInit {
     address: new FormControl(''),
     description: new FormControl(''),
     type: new FormControl(''),
-    urlWebsite: new FormControl('')
+    urlWebsite: new FormControl(''),
   });
 
   companyForm = new FormGroup({
@@ -29,15 +34,14 @@ export class CompanyComponent implements OnInit {
     address: new FormControl(''),
     description: new FormControl(''),
     type: new FormControl(''),
-    urlWebsite: new FormControl('')
+    urlWebsite: new FormControl(''),
   });
 
   constructor(
     private companyService: CompanyService,
     private authService: AuthService,
     private toastr: ToastrService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     const token = this.authService.getToken();
@@ -85,7 +89,7 @@ export class CompanyComponent implements OnInit {
             positionClass: 'toast-bottom-right',
             closeButton: true,
           });
-          this.data = {...this.data, ...updateData};
+          this.data = { ...this.data, ...updateData };
         },
         error: (err) => {
           console.error('Error updating company:', err);
@@ -119,7 +123,7 @@ export class CompanyComponent implements OnInit {
   }
 
   openModal2(): void {
-    const modal = document.getElementById('my_modal_2') as HTMLDialogElement
+    const modal = document.getElementById('my_modal_2') as HTMLDialogElement;
     if (modal) {
       modal.showModal();
     } else {
@@ -136,29 +140,29 @@ export class CompanyComponent implements OnInit {
     }
   }
 
-  addCompany(){
+  addCompany() {
     const token = this.authService.getToken();
     const decodedToken = this.authService.decodeToken(token);
 
     // @ts-ignore
-    const userId = decodedToken.userId
-    const companyForm = {...this.companyForm.value,userId};
-    console.log(companyForm)
+    const userId = decodedToken.userId;
+    const companyForm = { ...this.companyForm.value, userId };
+    console.log(companyForm);
     this.companyService.addCompany(companyForm).subscribe({
       next: (response) => {
         this.data = response;
-        this.closeModal2()
+        this.closeModal2();
         this.isLoading = false;
+        this.toastr.success(`Created Sucessfully`, 'Success', {
+          positionClass: 'toast-bottom-right',
+          closeButton: true,
+        });
       },
       error: (err) => {
-        this.closeModal2()
+        this.closeModal2();
         this.isLoading = false;
         console.error('Error fetching company data:', err);
       },
     });
   }
-
-
-
-
 }

@@ -3,15 +3,16 @@ import { JobApplicationService } from '../../../core/service/job-application.ser
 import { AuthService } from '../../../core/service/auth-service.component';
 import { InternshipSeekerService } from '../../../core/service/internship-seeker.service';
 import { RouterLink } from '@angular/router';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-job-application',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, NgIf, NgFor],
   templateUrl: './job-application.component.html',
 })
 export class JobApplicationComponent {
-  data: any;
+  data: any = null; // User profile data
   isLoading = true;
   userId: any;
   applications: any = [];
@@ -32,10 +33,13 @@ export class JobApplicationComponent {
     this.internshipSeekerService.getInternshipSeeker(this.userId).subscribe({
       next: (response) => {
         this.data = response;
-        console.log('Internship Seeker Data:', this.data);
 
-        // Fetch applications for the internship seeker
-        this.fetchApplications();
+        // If the profile exists, fetch applications
+        if (this.data) {
+          this.fetchApplications();
+        } else {
+          this.isLoading = false; // Stop the loader if no profile exists
+        }
       },
       error: (err) => {
         this.isLoading = false;
@@ -44,12 +48,12 @@ export class JobApplicationComponent {
     });
   }
 
-  // Fetch applications for the internship seeker
   fetchApplications() {
     this.internshipApplicationService.getApplications(this.data.id).subscribe({
       next: (response) => {
+        console.log(response);
+        
         this.applications = response;
-        console.log('Applications:', this.applications);
         this.isLoading = false;
       },
       error: (err) => {
@@ -59,14 +63,25 @@ export class JobApplicationComponent {
     });
   }
 
+  sortByDate(ascending: boolean): void {
+    this.applications.sort((a: any, b: any) => {
+      const dateA = new Date(a.appliedAt).getTime();
+      const dateB = new Date(b.appliedAt).getTime();
+      return ascending ? dateA - dateB : dateB - dateA;
+    });
+  }
+
+  onSortChange(event: Event): void {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.sortByDate(selectedValue === 'asc');
+  }
 
   deleteApplication(applicationId: any) {
-    console.log(applicationId);
     this.isLoading = true;
     this.internshipApplicationService
       .deleteApplication(applicationId)
       .subscribe({
-        next: (res) => {
+        next: () => {
           this.fetchApplications();
           this.isLoading = false;
         },

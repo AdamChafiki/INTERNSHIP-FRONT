@@ -30,9 +30,7 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Internship ID</th>
         <th>Internship Title</th>
-        <th>Seeker ID</th>
         <th>Seeker Name</th>
         <th>Applied At</th>
         <th>Actions</th>
@@ -42,9 +40,7 @@
     <tbody>
       <tr *ngFor="let application of applications; let i = index">
         <td>{{ i + 1 }}</td>
-        <td>{{ application.internship.id }}</td>
         <td>{{ application.internship.title }}</td>
-        <td>{{ application.internshipSeeker.id }}</td>
         <td>
           {{ application.internshipSeeker.user.firstName }}
           {{ application.internshipSeeker.user.lastName }}
