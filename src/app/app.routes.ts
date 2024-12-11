@@ -19,6 +19,7 @@ import { DashboardSeekerComponent } from './components/dashboard-internship-seek
 import { ApplicationComponent } from './components/dashboard-employer/application/application.component';
 import { CompanyAllComponent } from './components/company/company.component';
 import { SingleCompanyComponent } from './components/single-company/single-company.component';
+import { EmailComponent } from './email/email.component';
 
 export const routes: Routes = [
   {
@@ -52,6 +53,12 @@ export const routes: Routes = [
     component: VerifyAccountComponent,
   },
   {
+    path: 'email',
+    component: EmailComponent,
+    canActivate: [roleGuard],
+    data: { role: 'ROLE_INTERNSHIP_SEEKER' }
+  },
+  {
     path: 'employer-dashboard',
     component: DashboardEmployerComponent,
     canActivate: [roleGuard],
@@ -81,6 +88,10 @@ export const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
       },
+      {
+        path: 'email',
+        component: EmailComponent
+      }
     ],
   },
   {

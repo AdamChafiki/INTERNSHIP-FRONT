@@ -1,0 +1,135 @@
+<main >
+  <div class="max-w-2xl mx-auto p-4 shadow-lg rounded-lg bg-white">
+    <h2 class="text-xl mb-6 font-light">Send Internship Request</h2>
+    <form
+      [formGroup]="internshipForm"
+      (ngSubmit)="sendInternshipRequest()"
+      class="space-y-6"
+    >
+      <!-- Company Email -->
+      <div class="form-control">
+        <label for="companyEmail" class="label">
+          <span class="label-text font-semibold text-gray-500"
+            >Company Email</span
+          >
+        </label>
+        <input
+          type="email"
+          id="companyEmail"
+          formControlName="companyEmail"
+          required
+          class="input input-bordered w-full"
+        />
+        <div
+          *ngIf="
+            internshipForm.get('companyEmail')?.invalid &&
+            internshipForm.get('companyEmail')?.touched
+          "
+          class="text-error text-sm"
+        >
+          Company Email is required.
+        </div>
+      </div>
+
+      <!-- Seeker Name -->
+      <div class="form-control">
+        <label for="seekerName" class="label">
+          <span class="label-text font-semibold text-gray-500">Your Name</span>
+        </label>
+        <input
+          type="text"
+          id="seekerName"
+          formControlName="seekerName"
+          required
+          class="input input-bordered w-full"
+        />
+        <div
+          *ngIf="
+            internshipForm.get('seekerName')?.invalid &&
+            internshipForm.get('seekerName')?.touched
+          "
+          class="text-error text-sm"
+        >
+          Name is required.
+        </div>
+      </div>
+
+      <!-- Seeker Email -->
+      <div class="form-control">
+        <label for="seekerEmail" class="label">
+          <span class="label-text font-semibold text-gray-500">Your Email</span>
+        </label>
+        <input
+          type="email"
+          id="seekerEmail"
+          formControlName="seekerEmail"
+          required
+          class="input input-bordered w-full"
+        />
+        <div
+          *ngIf="
+            internshipForm.get('seekerEmail')?.invalid &&
+            internshipForm.get('seekerEmail')?.touched
+          "
+          class="text-error text-sm"
+        >
+          Email is required.
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div class="form-control">
+        <label for="seekerMessage" class="label">
+          <span class="label-text font-semibold text-gray-500">Message</span>
+        </label>
+        <textarea
+          id="seekerMessage"
+          formControlName="seekerMessage"
+          required
+          class="textarea textarea-bordered w-full"
+        ></textarea>
+        <div
+          *ngIf="
+            internshipForm.get('seekerMessage')?.invalid &&
+            internshipForm.get('seekerMessage')?.touched
+          "
+          class="text-error text-sm"
+        >
+          Message is required.
+        </div>
+      </div>
+
+      <!-- CV Upload -->
+      <div class="form-control">
+        <label for="cv" class="label">
+          <span class="label-text font-semibold text-gray-500">Upload CV</span>
+        </label>
+        <input
+          type="file"
+          id="cv"
+          (change)="onFileSelected($event)"
+          accept=".pdf,.doc,.docx"
+          class="file-input file-input-bordered w-full"
+        />
+        <div *ngIf="!selectedFile" class="text-error text-sm">
+          Please upload your CV.
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      @if (isLoading) {
+      <button class="btn btn-warning btn-square mt-2 w-full">
+        <span class="loading loading-spinner"></span>
+      </button>
+      }@else {
+      <button
+        type="submit"
+        class="btn bg-orange-500 text-white w-full"
+        [disabled]="internshipForm.invalid || !selectedFile"
+      >
+        Send Request
+      </button>
+      }
+    </form>
+  </div>
+</main>
