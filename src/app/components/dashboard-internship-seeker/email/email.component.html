@@ -1,4 +1,4 @@
-<main >
+<main>
   <div class="max-w-2xl mx-auto p-4 shadow-lg rounded-lg bg-white">
     <h2 class="text-xl mb-6 font-light">Send Internship Request</h2>
     <form
@@ -40,6 +40,7 @@
           type="text"
           id="seekerName"
           formControlName="seekerName"
+          [value]="data ? data.user.firstName + ' ' + data.user.lastName : ''"
           required
           class="input input-bordered w-full"
         />
@@ -62,6 +63,7 @@
         <input
           type="email"
           id="seekerEmail"
+          [value]="data ? data.user.email : ''"
           formControlName="seekerEmail"
           required
           class="input input-bordered w-full"

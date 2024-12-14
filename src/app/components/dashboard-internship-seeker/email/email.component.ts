@@ -6,24 +6,36 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgIf } from '@angular/common';
-import { EmailService } from '../core/service/email.service';
 import { ToastrService } from 'ngx-toastr';
+import { EmailService } from '../../../core/service/email.service';
+import { AuthService } from '../../../core/service/auth-service.component';
+import { InternshipSeekerService } from '../../../core/service/internship-seeker.service';
 
 @Component({
   selector: 'app-internship-request',
   standalone: true,
   imports: [NgIf, ReactiveFormsModule],
   templateUrl: './email.component.html',
-  providers: [EmailService, ToastrService],
+  providers: [
+    EmailService,
+    ToastrService,
+    AuthService,
+    InternshipSeekerService,
+  ],
 })
 export class EmailComponent {
   internshipForm: FormGroup;
   selectedFile: File | null = null;
   isLoading = false;
+  data: any;
+  userId:any;
 
   constructor(
     private fb: FormBuilder,
     private emailService: EmailService,
+    private authService: AuthService,
+    private internshipSeekerService: InternshipSeekerService,
+
     private toastr: ToastrService
   ) {
     this.internshipForm = this.fb.group({
@@ -31,6 +43,31 @@ export class EmailComponent {
       seekerName: ['', Validators.required],
       seekerEmail: ['', [Validators.required, Validators.email]],
       seekerMessage: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    const token = this.authService.getToken();
+    const decodedToken = this.authService.decodeToken(token);
+    // @ts-ignore
+    this.userId = decodedToken?.userId;
+    console.log(this.userId);
+
+    this.internshipSeekerService.getInternshipSeeker(this.userId).subscribe({
+      next: (response) => {
+        this.data = response;
+        console.log('data', this.data);
+        if (response == null) {
+          this.isLoading = false;
+        } else {
+          this.isLoading = false;
+        }
+      },
+      error: (err) => {
+        this.data = null;
+        this.isLoading = false;
+        console.error('Error :', err);
+      },
     });
   }
 
