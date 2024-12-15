@@ -42,9 +42,10 @@ export class RegisterComponent {
 
     this.authService.doRegister(registerForm).subscribe({
       next: (response) => {
-        this.toastr.success(`${response.message}`, 'Success', {
+        this.toastr.success(`Account created successfully`, 'Success', {
           positionClass: 'toast-bottom-right',
           closeButton: true,
+          timeOut: 2000
         });
 
         this.router.navigate(["/login"])

@@ -11,6 +11,16 @@ export class InternshipService {
 
   constructor(private http: HttpClient) {}
 
+  // New method to search by both title and location
+  searchInternshipsByLocationAndTitle(
+    query: string,
+    location: string
+  ): Observable<any> {
+    return this.http.get<any>(`${this.BASE_URL}/internship/search`, {
+      params: { query: query, location: location },
+    });
+  }
+
   getAllInternships(): Observable<any> {
     return this.http.get<any>(`${this.BASE_URL}/internship/all`);
   }
@@ -22,6 +32,7 @@ export class InternshipService {
   getInternshipsByCompany(id: any): Observable<any> {
     return this.http.get<any>(`${this.BASE_URL}/internship/company/${id}`);
   }
+
   getInternshipsByLocation(location: any): Observable<any> {
     return this.http.get<any>(
       `${this.BASE_URL}/internship/location?location=${location}`

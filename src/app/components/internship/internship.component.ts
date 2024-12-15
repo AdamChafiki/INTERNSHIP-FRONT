@@ -14,6 +14,7 @@ export class InternshipComponent implements OnInit {
   data: any = [];
   isLoading = true;
   searchQuery: string = '';
+  locationFilter: string = ''; 
 
   constructor(
     private authService: AuthService,
@@ -21,56 +22,38 @@ export class InternshipComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.internshipService.getAllInternships().subscribe({
-      next: (response) => {
-        console.log(response);
-        this.data = response;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.isLoading = false;
-        console.error('Error fetching company data2:', err);
-      },
-    });
+    this.fetchInternships();
   }
 
-  fetchInternshipsByLocation(location?: string): void {
+  fetchInternships(query: string = '', location: string = ''): void {
     this.isLoading = true;
-    this.internshipService.getInternshipsByLocation(location).subscribe({
-      next: (data) => {
-        this.data = data;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching internships:', err);
-        this.isLoading = false;
-      },
-    });
+
+    this.internshipService
+      .searchInternshipsByLocationAndTitle(query, location)
+      .subscribe({
+        next: (data) => {
+          this.data = data.length === 0 ? [] : data; 
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error fetching internships:', err);
+          this.isLoading = false;
+        },
+      });
   }
+
+  // Handle search query input
+  search($event: any): void {
+    const query = $event.target.query.value.trim();
+    console.log('Search Query: ', query); 
+    this.searchQuery = query; 
+    this.fetchInternships(query, this.locationFilter); 
+  }
+
 
   filterByLocation(event: Event): void {
     const selectedLocation = (event.target as HTMLSelectElement).value;
-
-    if (selectedLocation === 'Choose' || !selectedLocation) {
-      this.fetchInternshipsByLocation(); // Fetch all internships
-    } else {
-      this.fetchInternshipsByLocation(selectedLocation); // Fetch filtered internships
-    }
-  }
-
-  search($event: any) {
-    this.isLoading = true;
-    const query = $event.target.query.value;
-    this.internshipService.searchInternship(query).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.data = response;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.isLoading = false;
-        console.error('Error fetching company data2:', err);
-      },
-    });
+    this.locationFilter = selectedLocation;
+    this.fetchInternships(this.searchQuery, selectedLocation); 
   }
 }
