@@ -281,13 +281,20 @@
             <label for="level" class="block text-sm font-medium text-gray-700"
               >Level</label
             >
-            <input
+            <select
               id="level"
               formControlName="level"
-              type="text"
-              placeholder="Level (e.g., Bachelor, Master)"
               class="w-full rounded-lg border-gray-300 p-3 text-sm"
-            />
+            >
+              <option value="">Select Level</option>
+              <option value="Bac+2">Bac +2</option>
+              <option value="Bac+3">Bac +3</option>
+              <option value="Bac+4">Bac +4</option>
+              <option value="Bac+5">Bac +5</option>
+              <option value="Master">Master</option>
+              <option value="Doctorate">Doctorate</option>
+              <!-- Add more options as needed -->
+            </select>
           </div>
 
           <!-- Specialty -->
@@ -324,18 +331,19 @@
 
           <!-- Duration -->
           <div>
-            <label
-              for="duration"
-              class="block text-sm font-medium text-gray-700"
-              >Duration (Months)</label
+            <label for="level" class="block text-sm font-medium text-gray-700"
+              >Level</label
             >
-            <input
-              id="duration"
-              type="number"
+            <select
+              id="level"
               formControlName="duration"
-              placeholder="Duration in Months"
               class="w-full rounded-lg border-gray-300 p-3 text-sm"
-            />
+            >
+              <option value="">Select Duration</option>
+              <option value="Bac+2">2</option>
+              <option value="Bac+3">3</option>
+              <option value="Bac+4">6</option>
+            </select>
           </div>
 
           <!-- Start Date -->

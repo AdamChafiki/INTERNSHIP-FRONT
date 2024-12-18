@@ -28,7 +28,7 @@ export class EmailComponent {
   selectedFile: File | null = null;
   isLoading = false;
   data: any;
-  userId:any;
+  userId: any;
 
   constructor(
     private fb: FormBuilder,
@@ -57,16 +57,19 @@ export class EmailComponent {
       next: (response) => {
         this.data = response;
         console.log('data', this.data);
-        if (response == null) {
-          this.isLoading = false;
-        } else {
-          this.isLoading = false;
+
+        if (response) {
+          this.internshipForm.patchValue({
+            seekerName: this.data.user.firstName, // Update form control
+            seekerEmail: this.data.user.email, // Example: auto-fill email too
+          });
         }
+        this.isLoading = false;
       },
       error: (err) => {
         this.data = null;
         this.isLoading = false;
-        console.error('Error :', err);
+        console.error('Error:', err);
       },
     });
   }

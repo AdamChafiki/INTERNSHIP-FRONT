@@ -145,12 +145,11 @@ export class InternshipEmployerComponent implements OnInit {
             positionClass: 'toast-bottom-right',
             closeButton: true,
           });
-          this.ngOnInit();
-          // this.data = this.data.map((internship: any) =>
-          //   internship.id === id
-          //     ? { ...internship, ...updateInternshipForm }
-          //     : internship
-          // );
+          this.data = this.data.map((internship: any) =>
+            internship.id === id
+              ? { ...internship, ...updateInternshipForm }
+              : internship
+          );
         },
         error: (err) => {
           console.error('Error updating company:', err);
